@@ -34,11 +34,13 @@ def chip(href, text, filled):
 
 # The header sits in its own table: if it shared columns with the wider rows below, the logo column
 # would be stretched to take its share of the extra width and the gap to the name would grow.
+# The logo cell is exactly the image width with no padding: Outlook's composer applies border-box sizing
+# and caps pasted images at the cell's content width, so padding on this cell squashes the flame.
 fragment = f"""<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
 <tr><td>
   <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;"><tr>
-    <td width="40" valign="middle" style="width:40px;padding:0 12px 0 0;"><a href="{MC}"><img src="{FLAME}" width="40" height="40" alt="Maester" style="display:block;border:0;width:40px;height:40px;"></a></td>
-    <td valign="middle" style="font-family:{SANS};font-size:15px;line-height:21px;color:{INK};">
+    <td width="40" valign="middle" style="width:40px;"><a href="{MC}"><img src="{FLAME}" width="40" height="40" alt="Maester" style="display:block;border:0;width:40px;height:40px;"></a></td>
+    <td valign="middle" style="padding:0 0 0 12px;font-family:{SANS};font-size:15px;line-height:21px;color:{INK};">
       <div style="font-size:18px;font-weight:700;">Merill Fernando</div>
       <div style="font-size:14px;color:{MUTED};">Founder, Jozra &middot; Creator of Maester</div>
     </td>
