@@ -1,6 +1,6 @@
 # Email signature
 
-Outlook signature for merill@jozra.com, built as email-safe HTML and published with GitHub Pages.
+Outlook signature for merill@jozra.com, built as email-safe HTML and published with GitHub Pages at **https://merill.net/signature/**.
 
 - **[index.html](index.html)**: the signature with a Copy button. Open it, click **Copy signature**, paste into Outlook.
 - **[signature-fragment.html](signature-fragment.html)**: the raw signature HTML, for pasting somewhere other than Outlook.
