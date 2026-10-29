@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Builds index.html (preview + Copy button) and signature-fragment.html (the raw signature) from the Badges design."""
+"""Builds signature-fragment.html (the raw Maester signature) from the Badges design, then rebuilds index.html."""
 import base64, pathlib
 
 here = pathlib.Path(__file__).parent
@@ -60,48 +60,7 @@ fragment = f"""<table cellpadding="0" cellspacing="0" border="0" style="border-c
 </td></tr>
 </table>"""
 
-page = f"""<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Email signature</title>
-<style>
-  /* Preview only, not part of the signature: use an installed Calibri, or borrow it from the Outlook bundle when
-     this page is opened locally on a Mac. On GitHub Pages without Calibri the preview falls back to the system font. */
-  @font-face {{ font-family:Calibri; font-weight:400; src:local("Calibri"), url("file:///Applications/Microsoft%20Outlook.app/Contents/Resources/DFonts/Calibri.ttf"); }}
-  @font-face {{ font-family:Calibri; font-weight:600 700; src:local("Calibri Bold"), local("Calibri-Bold"), url("file:///Applications/Microsoft%20Outlook.app/Contents/Resources/DFonts/Calibrib.ttf"); }}
-  * {{ box-sizing:border-box; }}
-  body {{ margin:0; padding:40px 16px 80px; background:#f4f4f5; color:{INK}; font-family:{SANS}; -webkit-font-smoothing:antialiased; }}
-  .wrap {{ max-width:680px; margin:0 auto; }}
-  .top {{ display:flex; align-items:center; justify-content:space-between; margin:0 0 12px; }}
-  h1 {{ font-size:18px; font-weight:600; margin:0; }}
-  button {{ font:inherit; font-size:13px; font-weight:500; padding:6px 14px; border:1px solid {LINE}; border-radius:999px; background:#fff; color:{INK}; cursor:pointer; }}
-  button.done {{ background:{INK}; color:#fff; border-color:{INK}; }}
-  .mail {{ background:#fff; border:1px solid {LINE}; border-radius:12px; padding:24px 28px 28px; }}
-  .body {{ font-size:14px; line-height:21px; color:#444; margin:0 0 22px; }}
-  ol {{ color:{MUTED}; font-size:13px; line-height:20px; padding-left:20px; margin:24px 0 0; }}
-</style></head><body><div class="wrap">
-<div class="top"><h1>Email signature</h1><button id="copy">Copy signature</button></div>
-<div class="mail">
-  <p class="body">Thanks, talk soon.</p>
-  <div id="sig">{fragment}</div>
-</div>
-<ol>
-  <li>Click <b>Copy signature</b>.</li>
-  <li>Outlook &rarr; Settings &rarr; Accounts &rarr; Signatures &rarr; New signature.</li>
-  <li>Paste, name it, and set it as the default for the jozra.com account. Send yourself a test.</li>
-</ol>
-</div>
-<script>
-var b = document.getElementById('copy');
-b.onclick = function () {{
-  var r = document.createRange(); r.selectNodeContents(document.getElementById('sig'));
-  var s = getSelection(); s.removeAllRanges(); s.addRange(r);
-  document.execCommand('copy'); s.removeAllRanges();
-  b.textContent = 'Copied'; b.classList.add('done');
-  setTimeout(function () {{ b.textContent = 'Copy signature'; b.classList.remove('done'); }}, 1800);
-}};
-</script>
-</body></html>"""
-
 (here / "signature-fragment.html").write_text(fragment)
-(here / "index.html").write_text(page)
-print("wrote index.html and signature-fragment.html")
+print("wrote signature-fragment.html")
+
+import runpy; runpy.run_path(str(here / "build-index.py"))

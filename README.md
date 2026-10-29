@@ -1,31 +1,24 @@
 # Email signature
 
-Outlook signature for merill@jozra.com, built as email-safe HTML and published with GitHub Pages at **https://merill.net/signature/**.
+Outlook signatures, built as email-safe HTML and published with GitHub Pages at **https://merill.net/signature/**. One page holds all of them, each with its own Copy button:
 
-- **[index.html](index.html)**: the signature with a Copy button. Open it, click **Copy signature**, paste into Outlook.
-- **[signature-fragment.html](signature-fragment.html)**: the raw signature HTML, for pasting somewhere other than Outlook.
-- **[gallery.html](gallery.html)**: the ten concepts that were considered. The current signature is concept 09, Badges.
+- **Merill, Maester Cloud**: for merill@jozra.com. Concept 09, Badges, from [gallery.html](gallery.html).
+- **Merill, Admin.News**: the same design with the five newsletters (Entra, Intune, Defender, Purview, AD) as filled chips and an orange **Sponsor a newsletter** chip linking to sponsors.admin.news.
+- **Admin.News editors**: the Admin.News design with a form for the editor's name, title, LinkedIn, website and one other link. Empty fields drop out. Share the page link with editors.
 
 ## Changing it
 
 The HTML is generated, so edit the Python and rebuild rather than editing the HTML by hand:
 
 ```bash
-python3 build-final.py      # writes index.html and signature-fragment.html
-python3 build-gallery.py    # writes gallery.html
+python3 build-admin-news.py  # writes admin-news-fragment.html and the editor templates, then index.html
+python3 build-final.py       # writes signature-fragment.html, then index.html
+python3 build-gallery.py     # writes gallery.html
 ```
 
-Wording, links and colours are variables at the top of `build-final.py`. The flame logo is embedded from `maester-logo.png` as a data URI; Outlook turns it into an inline attachment when the signature is saved, so recipients never download it.
+Both build scripts finish by running `build-index.py`, which puts every fragment on `index.html`. Wording, links and colours are variables at the top of each script. The flame logo is embedded from `maester-logo.png`, and the Admin.News logos from `admin-news/` (copied from `merill/newsletter` `app/static/brand` at 2x), all as data URIs. Outlook turns them into inline attachments when the signature is saved, so recipients never download them.
 
-## Admin.News signature
-
-A second signature for Admin.News work, published at **https://merill.net/signature/admin-news.html**. Same Badges design and Outlook rules, with the five newsletters (Entra, Intune, Defender, Purview, AD) as the filled chips and Maester Cloud moved to the outline row.
-
-```bash
-python3 build-admin-news.py  # writes admin-news.html and admin-news-fragment.html
-```
-
-Logos live in `admin-news/`, copied from `merill/newsletter` (`app/static/brand`) at 2x and embedded as data URIs. Wording and links are variables at the top of the script.
+The editor signature is `admin-news-editor-template.html` with `%%NAME%%`, `%%TITLE%%` and `%%LINKS%%` placeholders; the page fills them in and builds link chips from `admin-news-chip-template.html`.
 
 ## Installing in Outlook
 
