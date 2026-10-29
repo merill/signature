@@ -17,6 +17,16 @@ python3 build-gallery.py    # writes gallery.html
 
 Wording, links and colours are variables at the top of `build-final.py`. The flame logo is embedded from `maester-logo.png` as a data URI; Outlook turns it into an inline attachment when the signature is saved, so recipients never download it.
 
+## Admin.News signature
+
+A second signature for Admin.News work, published at **https://merill.net/signature/admin-news.html**. Same Badges design and Outlook rules, with the five newsletters (Entra, Intune, Defender, Purview, AD) as the filled chips and Maester Cloud moved to the outline row.
+
+```bash
+python3 build-admin-news.py  # writes admin-news.html and admin-news-fragment.html
+```
+
+Logos live in `admin-news/`, copied from `merill/newsletter` (`app/static/brand`) at 2x and embedded as data URIs. Wording and links are variables at the top of the script.
+
 ## Installing in Outlook
 
 1. Open the page and click **Copy signature**.
